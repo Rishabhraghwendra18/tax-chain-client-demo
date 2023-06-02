@@ -1,43 +1,19 @@
-require("@matterlabs/hardhat-zksync-solc");
+require("@nomicfoundation/hardhat-toolbox");
+require('dotenv').config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
+const SEPOLIA_NODE=process.env.SEPOLIA_NODE;
+const PRIVATE_KEY=process.env.PRIVATE_KEY;
+const ETHERSCAN_API = process.env.ETHERSCAN_API;
 module.exports = {
-  zksolc: {
-    version: "1.3.9",
-    compilerSource: "binary",
-    settings: {
-      optimizer: {
-        enabled: true,
-      },
-    },
+  solidity: "0.8.18",
+  etherscan: {
+    apiKey: ETHERSCAN_API,
   },
-  networks: {
-    zksync_testnet: {
-      url: "https://zksync2-testnet.zksync.dev",
-      ethNetwork: "goerli",
-      chainId: 280,
-      zksync: true,
-    },
-    zksync_mainnet: {
-      url: "https://zksync2-mainnet.zksync.io/",
-      ethNetwork: "mainnet",
-      chainId: 324,
-      zksync: true,
-    },
-  },
-  paths: {
-    artifacts: "./artifacts-zk",
-    cache: "./cache-zk",
-    sources: "./contracts",
-    tests: "./test",
-  },
-  solidity: {
-    version: "0.8.17",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
-      },
-    },
-  },
+  networks:{
+    sepolia: {
+      url: SEPOLIA_NODE,
+      accounts: [PRIVATE_KEY]
+    }
+  }
 };

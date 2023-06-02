@@ -1,17 +1,20 @@
 {
-  "name": "hardhat-javascript-starter",
+  "name": "contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "npx thirdweb@latest detect",
-    "deploy": "npx thirdweb@latest deploy",
-    "release": "npx thirdweb@latest release"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@matterlabs/hardhat-zksync-solc": "^0.3.17",
-    "hardhat": "^2.13.0"
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "hardhat": "^2.14.1"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.0",
-    "@thirdweb-dev/contracts": "^3",
-    "zksync-web3": "^0.14.3"
+    "dotenv": "^16.1.3"
   }
 }
