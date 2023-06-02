@@ -1,5 +1,6 @@
 import React from "react";
 import Navigation from "../../components/navigation/Navbar";
+import Header from "../../components/header/Header";
 import {
   Row,
   Col,
@@ -22,7 +23,7 @@ function Citizen() {
   return (
     <div className="">
       <Navigation></Navigation>
-      {/* <Header heading="Citizen: Rohan Singh"></Header> */}
+      <Header heading="Citizen: Rohan Singh"></Header>
       <Container>
         <Row>
           <PurchaseTokens web3={web3}></PurchaseTokens>
