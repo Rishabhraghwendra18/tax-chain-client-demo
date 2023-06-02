@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
 import { Sepolia } from "@thirdweb-dev/chains";
-import "./styles/globals.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 
 // This is the chain your dApp will work on.
 // Change this to the chain your app is built for.
@@ -14,7 +15,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
-     <ThirdwebProvider supportedChains={[Sepolia]}>
+    <ThirdwebProvider supportedChains={[Sepolia]}>
       <App />
     </ThirdwebProvider>
   </React.StrictMode>
