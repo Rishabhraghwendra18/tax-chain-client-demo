@@ -1,0 +1,11 @@
+{
+  "sepolia": {
+    "Govt": {
+      "address": "0x2523886B04731Ce03AeCcad82062efba81CAcC07",
+      "startBlock": 3609385
+    },
+    "Constitutency": {
+      "address": "0x089AC0B06277915174e57DbDF361B026D77209F6"
+    }
+  }
+}
