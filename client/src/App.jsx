@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Citizen from "./pages/citizen/Citizen";
+import Government from "./pages/government/Government";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/citizen",
     element: <Citizen />,
+  },
+  {
+    path: "/government",
+    element: <Government />,
   },
 ]);
 export default function App() {

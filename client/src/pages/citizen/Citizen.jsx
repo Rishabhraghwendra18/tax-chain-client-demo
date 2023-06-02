@@ -12,8 +12,8 @@ import {
   Table,
 } from "react-bootstrap";
 import Footer from "../../components/footer/Footer";
-// import CitizenTable from "../../components/Tables/CitizenTable.jsx";
-// import GovernmentTable from "../../components/Tables/GovernmentTable.jsx";
+import CitizenTable from "../../components/Tables/CitizenTable.jsx";
+import GovernmentTable from "../../components/Tables/GovernmentTable.jsx";
 import CurrentTokens from "../../components/currentTokens/CurrentTokens";
 import PurchaseTokens from "../../components/purchaseTokens/PurchaseTokens";
 // import Transact from "../../contracts/Transact.json";
@@ -31,15 +31,15 @@ export default function Citizen() {
         </Row>
       </Container>
       <div className="PayTax my-5">
-      <Row>
+        <Row>
           <Col sx={12} md={8} id="table">
             <div className="payTax-table">
-              {/* <CitizenTable tableData={[]}></CitizenTable> */}
+              <CitizenTable tableData={[]}></CitizenTable>
             </div>
           </Col>
           <Col sx={12} md={4}>
             <div>
-            <Card className="table-card">
+              <Card className="table-card">
                 <Card.Body>
                   <h2>Pay Tax</h2>
                   {true ? (
@@ -68,10 +68,10 @@ export default function Citizen() {
             </div>
           </Col>
           <Col className="mt-5">
-            {/* <GovernmentTable
+            <GovernmentTable
               heading={"Track You Tax"}
               tableData={[]}
-            ></GovernmentTable> */}
+            ></GovernmentTable>
           </Col>
         </Row>
       </div>
@@ -81,4 +81,3 @@ export default function Citizen() {
 }
 
 // export default Citizen;
-
