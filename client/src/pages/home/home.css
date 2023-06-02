@@ -1,7 +1,5 @@
 .black-bg {
   background-color: black;
-  height: 70rem;
-  width: 130%;
   margin-top: 2rem;
 }
 
@@ -88,7 +86,7 @@
 
   .black-bg {
     background-color: black;
-    height: 60rem;
+    /* height: 60rem; */
   }
 }
 
