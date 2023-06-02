@@ -10,16 +10,14 @@ import Citizen from "./pages/citizen/Citizen";
 
 const router = createBrowserRouter([
   {
-    path:'/',
-    element:<Home/>
+    path: "/",
+    element: <Home />,
   },
   {
-    path:'/citizen',
-    element:<Citizen/>
-  }
-])
+    path: "/citizen",
+    element: <Citizen />,
+  },
+]);
 export default function App() {
-  return (
-      <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }

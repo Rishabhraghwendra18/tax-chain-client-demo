@@ -16,12 +16,13 @@ import GovernmentTable from "../../components/Tables/GovernmentTable.jsx";
 import CurrentTokens from "../../components/currentTokens/CurrentTokens";
 import PurchaseTokens from "../../components/purchaseTokens/PurchaseTokens.jsx";
 // import Transact from "../../contracts/Transact.json";
+import "./citizen.css";
 
 function Citizen() {
   return (
     <div className="">
-      {/* <Navigation></Navigation> */}
-      <Header heading="Citizen: Rohan Singh"></Header>
+      <Navigation></Navigation>
+      {/* <Header heading="Citizen: Rohan Singh"></Header> */}
       <Container>
         <Row>
           <PurchaseTokens web3={web3}></PurchaseTokens>
@@ -32,7 +33,7 @@ function Citizen() {
         <Row>
           <Col sx={12} md={8} id="table">
             <div className="payTax-table">
-              <CitizenTable tableData={tableDataCitizen}></CitizenTable>
+              <CitizenTable tableData={[]}></CitizenTable>
             </div>
           </Col>
           <Col sx={12} md={4}>
@@ -40,9 +41,9 @@ function Citizen() {
               <Card className="table-card">
                 <Card.Body>
                   <h2>Pay Tax</h2>
-                  {mineMessage ? (
+                  {true ? (
                     <Alert variant="success" className="mb-5">
-                      {mineMessage}
+                      {"transaction complete"}
                     </Alert>
                   ) : (
                     ""
@@ -57,7 +58,7 @@ function Citizen() {
                     <Button
                       type="submit"
                       className="constituency-find-btn"
-                      onClick={handlePayTax}
+                      onClick={() => {}}
                     >
                       Submit
                     </Button>
@@ -69,7 +70,7 @@ function Citizen() {
           <Col className="mt-5">
             <GovernmentTable
               heading={"Track You Tax"}
-              tableData={tableDataGovernment}
+              tableData={[]}
             ></GovernmentTable>
           </Col>
         </Row>
