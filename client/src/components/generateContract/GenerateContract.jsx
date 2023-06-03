@@ -1,5 +1,6 @@
 import React from "react";
-import { Col, Button, Form, Card } from "react-bootstrap";
+import { Col, Form, Card } from "react-bootstrap";
+import Button from "../button";
 import "./generateContract.css";
 
 function GenerateContract() {
@@ -8,7 +9,7 @@ function GenerateContract() {
       <Col md={2}></Col>
       <Col md={8}>
         <Card className="gc-card">
-          <Form>
+          <Form className="d-flex flex-column gap-3">
             <Form.Group>
               <Form.Control
                 type="text"
@@ -31,6 +32,7 @@ function GenerateContract() {
               className="constituency-form-button-green"
               type="submit"
               onClick={() => {}}
+              style={{width:'fit-content',padding:5}}
             >
               Generate Contract
             </Button>
