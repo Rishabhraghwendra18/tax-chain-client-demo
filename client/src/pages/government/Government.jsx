@@ -35,13 +35,13 @@ function Government() {
               <div className="Government-form">
                 <Card className="table-card mt-3">
                   <Card.Body>
-                    <h3 className="table-heading">Transfer Funds</h3>
+                    <h3 className="table-heading text-center">Transfer Funds</h3>
                     <div className="Government-form-wrapper">
-                      <div className="currentFund">
+                      <div className="currentFund text-center">
                         <h1>25M</h1>
                         <p>Total Funds</p>
                       </div>
-                      <form action="">
+                      <form action="" className="d-flex flex-column align-items-center">
                         <input
                           type="text"
                           placeholder="Enter constituency ID"

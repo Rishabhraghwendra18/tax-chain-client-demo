@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Col, Button, Form, Card } from "react-bootstrap";
+import "./index.css";
 // import GovtDetails from '../../contracts/GovtDetails.json';
 
 function AddConstituency(web3) {
@@ -28,7 +29,7 @@ function AddConstituency(web3) {
   return (
     <Col md={12}>
       <Card className="constituency-card  constituency-form-card">
-        <Form>
+        <Form className="d-flex flex-column gap-3">
           <Form.Group>
             <Form.Control
               type="text"
@@ -48,13 +49,13 @@ function AddConstituency(web3) {
               }}
             />
           </Form.Group>
-          <Button
+          <button
             className="constituency-form-button-green"
             type="submit"
             onClick={() => {}}
           >
             Add Constituency
-          </Button>
+          </button>
         </Form>
       </Card>
     </Col>
