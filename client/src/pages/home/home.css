@@ -41,7 +41,6 @@
 }
 .white-bg {
   background-color: #f9f9fb;
-  height: 90rem;
 }
 
 /* white */
@@ -93,6 +92,5 @@
 @media only screen and (max-width: 768px) {
   .white-bg {
     background-color: #f9f9fb;
-    height: 160rem;
   }
 }

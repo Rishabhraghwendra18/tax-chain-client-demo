@@ -1,4 +1,5 @@
 import React from "react";
+import { ConnectWallet } from "@thirdweb-dev/react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import "./navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -78,6 +79,17 @@ function Navigation() {
           ""
         )} */}
       </Navbar.Collapse>
+        <ConnectWallet
+          dropdownPosition={{
+            align: "center",
+            side: "bottom",
+          }}
+          className="btn-green"
+          style={{
+            marginLeft: "auto",
+            marginRight: "1rem",
+          }}
+        />
     </Navbar>
   );
 }

@@ -73,9 +73,9 @@ function Home() {
                 imgUrl="https://image.freepik.com/free-vector/engineers-team-discussing-issues-construction-site_74855-4786.jpg"
               ></WhiteCard>
               <Col>
-                <Button href="/login" size="lg" className="button-green">
+                {/* <Button href="/login" size="lg" className="button-green">
                   Login
-                </Button>{" "}
+                </Button>{" "} */}
               </Col>
             </Row>
           </Container>
