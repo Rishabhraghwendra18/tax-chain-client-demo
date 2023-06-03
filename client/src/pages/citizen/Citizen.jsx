@@ -4,7 +4,7 @@ import Header from "../../components/header/Header";
 import {
   Row,
   Col,
-  Button,
+  // Button,
   Form,
   Card,
   Container,
@@ -16,6 +16,7 @@ import CitizenTable from "../../components/Tables/CitizenTable.jsx";
 import GovernmentTable from "../../components/Tables/GovernmentTable.jsx";
 import CurrentTokens from "../../components/currentTokens/CurrentTokens";
 import PurchaseTokens from "../../components/purchaseTokens/PurchaseTokens";
+import Button from "../../components/button";
 // import Transact from "../../contracts/Transact.json";
 import "./citizen.css";
 
@@ -59,7 +60,7 @@ export default function Citizen() {
                       type="submit"
                       className="constituency-find-btn"
                       onClick={() => {}}
-                      style={{marginLeft:'auto',marginRight:'auto',backgroundColor:'#00d395'}}
+                      style={{width:'fit-content',padding:5}}
                     >
                       Submit
                     </Button>

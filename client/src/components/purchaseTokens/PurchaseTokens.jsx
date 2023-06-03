@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Col, Button, Form, Card } from "react-bootstrap";
+import { Col, Form, Card } from "react-bootstrap";
+import Button from "../button";
 // import Transact from '../../contracts/Transact.json';
 
 import "./purchaseTokens.css";
@@ -44,7 +45,7 @@ export default function PurchaseTokens(web3) {
               className="pt-find-btn btn btn-primary"
               type="submit"
               onClick={handleSubmit}
-              style={{width:'10rem',marginLeft:'auto',marginRight:'auto',backgroundColor:'#00d395',}}
+              style={{width:'fit-content',padding:10}}
             >
               Submit
             </Button>
