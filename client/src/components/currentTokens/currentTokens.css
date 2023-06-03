@@ -6,6 +6,10 @@
   margin-top: -4.5rem;
   margin-bottom: 2.5rem;
   height: 11.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .ct-text {
@@ -17,4 +21,5 @@
 .ct-heading {
   font-weight: 800;
   color: #1c2332;
+  text-align: center;
 }

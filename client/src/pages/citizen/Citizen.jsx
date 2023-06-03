@@ -49,7 +49,7 @@ export default function Citizen() {
                   ) : (
                     ""
                   )}
-                  <Form>
+                  <Form className="d-flex flex-column">
                     <Form>
                       <Form.Group as={Col}>
                         <Form.Control type="number" placeholder="Amount" />
@@ -59,6 +59,7 @@ export default function Citizen() {
                       type="submit"
                       className="constituency-find-btn"
                       onClick={() => {}}
+                      style={{marginLeft:'auto',marginRight:'auto',backgroundColor:'#00d395'}}
                     >
                       Submit
                     </Button>

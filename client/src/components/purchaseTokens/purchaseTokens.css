@@ -3,11 +3,16 @@
   border: 2px solid #00d395;
   margin-bottom: 1rem;
 }
-
+.green-button{
+  border-radius: 10rem;
+}
 .pt-find-btn:hover {
   background-color: white;
   border: 2px solid #00d395;
   color: #00d395;
+}
+.test{
+  color: blue;
 }
 
 .pt-card {
@@ -22,4 +27,5 @@
 .pt-heading {
   font-weight: 800;
   color: #1c2332;
+  text-align: center;
 }

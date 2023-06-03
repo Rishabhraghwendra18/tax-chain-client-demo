@@ -30,7 +30,7 @@ export default function PurchaseTokens(web3) {
       <Card className="pt-card">
         <Card.Body>
           <h4 className="pt-heading">Purchase Tokens</h4>
-          <Form>
+          <Form style={{display:'flex',flexDirection:'column',gap:'1rem'}}>
             <Form.Group>
               <Form.Control
                 type="text"
@@ -41,9 +41,10 @@ export default function PurchaseTokens(web3) {
               />
             </Form.Group>
             <Button
-              className="pt-find-btn"
+              className="pt-find-btn btn btn-primary"
               type="submit"
               onClick={handleSubmit}
+              style={{width:'10rem',marginLeft:'auto',marginRight:'auto',backgroundColor:'#00d395',}}
             >
               Submit
             </Button>
