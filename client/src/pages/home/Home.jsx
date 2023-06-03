@@ -31,7 +31,7 @@ function Home() {
                   the total tax collection. With TaxChain people know whether
                   their funds are being used well or not.
                 </p>
-                <a href="/login" className="bold-green">
+                <a className="bold-green">
                   GET STARTED
                   <FontAwesomeIcon className="icon-arrow" icon={faArrowRight} />
                 </a>
