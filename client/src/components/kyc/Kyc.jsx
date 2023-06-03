@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Col, Button, Form, Card } from "react-bootstrap";
+import { Col, Form, Card } from "react-bootstrap";
+import Button from "../button";
 // import KYC from '../../contracts/KYC.json';
 
 export default function Kyc(web3) {
@@ -27,7 +28,7 @@ export default function Kyc(web3) {
   return (
     <Col md={6}>
       <Card className="constituency-card  constituency-form-card">
-        <Form>
+        <Form className="d-flex flex-column">
           <Form.Group>
             <Form.Control
               type="text"
@@ -41,6 +42,7 @@ export default function Kyc(web3) {
             className="constituency-form-button-green"
             type="submit"
             onClick={() => {}}
+            style={{width:'fit-content',padding:5}}
           >
             Confirm KYC
           </Button>

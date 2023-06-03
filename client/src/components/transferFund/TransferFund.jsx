@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Col, Button, Form, Card } from "react-bootstrap";
+import { Col, Form, Card } from "react-bootstrap";
+import Button from "../button";
 
 function TransferFunds(web3) {
   //   const [toAccount, setToAccount] = useState("");
@@ -24,7 +25,7 @@ function TransferFunds(web3) {
   return (
     <Col md={6}>
       <Card className="constituency-card  constituency-form-card">
-        <Form>
+        <Form className="d-flex flex-column gap-3">
           <Form.Group>
             <Form.Control
               type="text"
@@ -47,6 +48,7 @@ function TransferFunds(web3) {
           <Button
             className="constituency-form-button-green"
             type="submit"
+            style={{width:'fit-content',padding:5}}
             onClick={() => {}}
           >
             Transfer Funds

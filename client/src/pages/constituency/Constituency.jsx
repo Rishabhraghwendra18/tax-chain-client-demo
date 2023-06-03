@@ -29,8 +29,8 @@ function Constituency() {
         <div>
           <Card className="table-card">
             <Card.Body>
-              <h2>Add Contractor</h2>
-              <Form>
+              <h2 className="text-center">Add Contractor</h2>
+              <Form className="d-flex flex-column">
                 <Form>
                   <Form.Group as={Col}>
                     <Form.Label></Form.Label>
@@ -43,13 +43,13 @@ function Constituency() {
                     />
                   </Form.Group>
                 </Form>
-                <Button
+                <button
                   type="submit"
                   className="constituency-find-btn"
                   onClick={() => {}}
                 >
                   Submit
-                </Button>
+                </button>
               </Form>
             </Card.Body>
           </Card>

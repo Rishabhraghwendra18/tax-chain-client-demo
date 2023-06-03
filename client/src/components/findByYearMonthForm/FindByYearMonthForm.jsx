@@ -1,5 +1,6 @@
 import React from "react";
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
+import Button from "../button";
 
 function FindByYearMonthForm() {
   return (
@@ -27,9 +28,9 @@ function FindByYearMonthForm() {
             </Form.Control>
           </Form.Group>
         </Col>
-        <Col md={2}>
+        <Col md={2} className="d-flex align-items-center justify-content-center">
           {" "}
-          <Button className="constituency-find-btn" type="submit">
+          <Button style={{width:'80%',padding:5,margin:0,marginTop:'auto'}} type="submit">
             Find
           </Button>
         </Col>
