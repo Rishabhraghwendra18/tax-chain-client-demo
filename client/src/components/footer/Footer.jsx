@@ -11,23 +11,20 @@ function Footer() {
       <Container>
         <Row>
           <Col md={12} className="footer-text">
-            Made with
+            Re-created with
             <FontAwesomeIcon className="icon-heart" icon={faHeart} />
             in India by{" "}
-            <a className="footer-name" href="https://github.com/aastha985">
-              Aastha
+            <a className="footer-name" href="https://www.linkedin.com/in/rishabh-sde/" target="_blank">
+              Rishabh Raghwendra
             </a>
             ,{" "}
-            <a className="footer-name" href="https://github.com/agrim19">
-              Agrim
-            </a>{" "}
             and{" "}
-            <a className="footer-name" href="https://github.com/tushar19340">
-              Tushar
+            <a className="footer-name" href="https://www.linkedin.com/in/anubha-kumari-329753221/" target="_blank">
+              Anubha Kumari
             </a>
           </Col>
           <Col className="footer-text-copyright">
-            Copyright © 2021 | TaxChain
+            Copyright © 2023 | TaxChain
           </Col>
         </Row>
       </Container>

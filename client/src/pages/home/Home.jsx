@@ -44,7 +44,7 @@ function Home() {
         </div>
         <div className="white-bg">
           <Container>
-            <Row>
+            <Row className="gx-5 gy-5">
               <Col md={5}>
                 <h3 className="grey">TaxChain For Everyone</h3>
                 <h3 className="heading">
