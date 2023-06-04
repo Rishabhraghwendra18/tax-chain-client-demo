@@ -1,5 +1,10 @@
-import React,{useState} from "react";
-import { useContractWrite, useContractRead, useContract,useAddress } from "@thirdweb-dev/react";
+import React, { useState } from "react";
+import {
+  useContractWrite,
+  useContractRead,
+  useContract,
+  useAddress,
+} from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { bigNumberToEthers } from "../../utils/bigNumberToEther";
 import Navigation from "../../components/navigation/Navbar";
@@ -14,37 +19,47 @@ import GOVTABI from "../../contractsABI/Govt.json";
 import "./government.css";
 
 const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
-const GOVT_ADDRESS ='0x2523886B04731Ce03AeCcad82062efba81CAcC07';
-const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
+const GOVT_ADDRESS = "0x2523886B04731Ce03AeCcad82062efba81CAcC07";
+const CONSTITUENCY_ADDRESS = "0x089AC0B06277915174e57DbDF361B026D77209F6";
 
 function Government() {
   const address = useAddress();
   const [isTransferLoading, setIsTransferLoading] = useState(false);
-  const { contract:WETHContract,isLoading: isContractLoading, error:contractError } = useContract(WETH_ADDRESS,WETHABI);
-  const { contract:GovtContract,isLoading: isGovtContractLoading, error:GovtContractError } = useContract(GOVT_ADDRESS,GOVTABI);
+  const {
+    contract: WETHContract,
+    isLoading: isContractLoading,
+    error: contractError,
+  } = useContract(WETH_ADDRESS, WETHABI);
+  const {
+    contract: GovtContract,
+    isLoading: isGovtContractLoading,
+    error: GovtContractError,
+  } = useContract(GOVT_ADDRESS, GOVTABI);
 
-  const { data:govtWETHBalance, isLoading, error } = useContractRead(
-    WETHContract,
-    "balanceOf",
-    [address]
-  );
-  const {data:govtUsedWETHAmount,isLoading:govtUsedWETHLoading,error:govtUsedWETHError} = useContractRead(
-    GovtContract,
-    "usedFunds"
-  )
-  const {mutateAsync:govtTranferWETHAmount,isLoading:govtTransferWETHLoading,error:govtTransferWETHError} = useContractWrite(
-    GovtContract,
-    "transferTo"
-  )
-  const handleTransferToConstituency = async (event)=>{
+  const {
+    data: govtWETHBalance,
+    isLoading,
+    error,
+  } = useContractRead(WETHContract, "balanceOf", [GOVT_ADDRESS]);
+  const {
+    data: govtUsedWETHAmount,
+    isLoading: govtUsedWETHLoading,
+    error: govtUsedWETHError,
+  } = useContractRead(GovtContract, "usedFunds");
+  const {
+    mutateAsync: govtTranferWETHAmount,
+    isLoading: govtTransferWETHLoading,
+    error: govtTransferWETHError,
+  } = useContractWrite(GovtContract, "transferTo");
+  
+  const handleTransferToConstituency = async (event) => {
     event.preventDefault();
     setIsTransferLoading(true);
-   await govtTranferWETHAmount({
-    args:[CONSTITUENCY_ADDRESS,ethers.utils.parseEther("0.1")]
-   }
-   );
-   setIsTransferLoading(false);
-  }
+    await govtTranferWETHAmount({
+      args: [CONSTITUENCY_ADDRESS, ethers.utils.parseEther("0.1")],
+    });
+    setIsTransferLoading(false);
+  };
   return (
     <>
       <Navigation></Navigation>
@@ -52,8 +67,22 @@ function Government() {
       <Container>
         <div className="Government mb-5">
           <Row>
-            <Fund name="Total Funds" value={`${govtWETHBalance!==undefined ? bigNumberToEthers(govtWETHBalance):'0.0'} WETH`}></Fund>
-            <Fund name="Used Funds" value={`${govtUsedWETHAmount!==undefined ? bigNumberToEthers(govtUsedWETHAmount):'0.0'} WETH`}></Fund>
+            <Fund
+              name="Total Funds"
+              value={`${
+                govtWETHBalance !== undefined
+                  ? bigNumberToEthers(govtWETHBalance)
+                  : "0.0"
+              } WETH`}
+            ></Fund>
+            <Fund
+              name="Used Funds"
+              value={`${
+                govtUsedWETHAmount !== undefined
+                  ? bigNumberToEthers(govtUsedWETHAmount)
+                  : "0.0"
+              } WETH`}
+            ></Fund>
           </Row>
           <Row>
             <Col sm={12} md={8}>
@@ -71,13 +100,22 @@ function Government() {
               <div className="Government-form">
                 <Card className="table-card mt-3">
                   <Card.Body>
-                    <h3 className="table-heading text-center">Transfer Funds</h3>
+                    <h3 className="table-heading text-center">
+                      Transfer Funds
+                    </h3>
                     <div className="Government-form-wrapper">
                       <div className="currentFund text-center">
-                        <h1>{`${govtWETHBalance!==undefined ? bigNumberToEthers(govtWETHBalance):'0.0'} WETH`}</h1>
+                        <h1>{`${
+                          govtWETHBalance !== undefined
+                            ? bigNumberToEthers(govtWETHBalance)
+                            : "0.0"
+                        } WETH`}</h1>
                         <p>Total Funds</p>
                       </div>
-                      <form action="" className="d-flex flex-column align-items-center">
+                      <form
+                        action=""
+                        className="d-flex flex-column align-items-center"
+                      >
                         <input
                           type="text"
                           placeholder="Enter constituency ID"
@@ -104,7 +142,9 @@ function Government() {
                           onClick={handleTransferToConstituency}
                           disabled={isTransferLoading}
                         >
-                          {isTransferLoading ? "Transcation in process":"Transfer"}
+                          {isTransferLoading
+                            ? "Transcation in process"
+                            : "Transfer"}
                         </button>
                       </form>
                     </div>

@@ -1,26 +1,48 @@
-import React from "react";
+import React,{useState} from "react";
+import { useContractWrite, useContractRead, useContract,useAddress } from "@thirdweb-dev/react";
+import { Row, Col, Button, Form, Card, Container } from "react-bootstrap";
+import { bigNumberToEthers } from "../../utils/bigNumberToEther";
 import Navigation from "../../components/navigation/Navbar";
 import "./constituency.css";
-import { Row, Col, Button, Form, Card, Container } from "react-bootstrap";
 import Footer from "../../components/footer/Footer.jsx";
 import Header from "../../components/header/Header.jsx";
 import Fund from "../../components/fund/Fund.jsx";
 import TransferFunds from "../../components/transferFund/TransferFund.jsx";
 import Transactions from "../../components/transcations/Transactions";
 import Kyc from "../../components/kyc/Kyc.jsx";
+import WETHABI from "../../contractsABI/WETH.json";
+import CONSTITUENCYABI from "../../contractsABI/Constituency.json";
+
+const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
+const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
 
 function Constituency() {
+  const address = useAddress();
+  const [isTransferLoading, setIsTransferLoading] = useState(false);
+  const { contract:WETHContract,isLoading: isContractLoading, error:contractError } = useContract(WETH_ADDRESS,WETHABI);
+  const { contract:constituencyContract,isLoading: isCConstituencyContractLoading, error:constituencyContractError } = useContract(CONSTITUENCY_ADDRESS,CONSTITUENCYABI);
+  
+  const { data:constituencyWETHBalance, isLoading, error } = useContractRead(
+    WETHContract,
+    "balanceOf",
+    [CONSTITUENCY_ADDRESS]
+  );
+  const {data:constituencyUsedWETHAmount,isLoading:constituencyUsedWETHLoading,error:constituencyUsedWETHError} = useContractRead(
+    constituencyContract,
+    "usedFunds"
+  );
+
   return (
     <div>
       <Navigation></Navigation>
       <Header heading="Malviya Nagar Constituency"></Header>
       <Container className="my-5">
         <Row>
-          <Fund name="Alloted Funds" value="2392138"></Fund>
-          <Fund name="Used Funds" value="3202"></Fund>
+          <Fund name="Alloted Funds" value={`${constituencyWETHBalance!==undefined ? bigNumberToEthers(constituencyWETHBalance):'0.0'} WETH`}></Fund>
+          <Fund name="Used Funds" value={`${constituencyUsedWETHAmount!== undefined ? bigNumberToEthers(constituencyUsedWETHAmount):'0.0'} WETH`}></Fund>
         </Row>
         <Row>
-          <TransferFunds web3={web3}></TransferFunds>
+          <TransferFunds></TransferFunds>
           <Kyc web3={web3}></Kyc>
         </Row>
 
@@ -31,7 +53,6 @@ function Constituency() {
             <Card.Body>
               <h2 className="text-center">Add Contractor</h2>
               <Form className="d-flex flex-column">
-                <Form>
                   <Form.Group as={Col}>
                     <Form.Label></Form.Label>
                     <Form.Control
@@ -42,7 +63,6 @@ function Constituency() {
                       }}
                     />
                   </Form.Group>
-                </Form>
                 <button
                   type="submit"
                   className="constituency-find-btn"

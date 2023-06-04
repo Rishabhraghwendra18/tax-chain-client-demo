@@ -1,27 +1,32 @@
 import React, { useState } from "react";
+import { useContractWrite, useContractRead, useContract,useAddress } from "@thirdweb-dev/react";
+import { ethers } from "ethers";
 import { Col, Form, Card } from "react-bootstrap";
 import Button from "../button";
+import CONSTITUENCYABI from "../../contractsABI/Constituency.json";
 
-function TransferFunds(web3) {
-  //   const [toAccount, setToAccount] = useState("");
-  //   const [toValue, setToValue] = useState(0);
-  //   const handleSubmit = async (event) => {
-  //     event.preventDefault();
-  //     web3.web3.web3.eth.getAccounts().then(async (accounts) => {
-  //       let account = accounts[0];
-  //       web3.web3.web3.eth
-  //         .sendTransaction({
-  //           from: account,
-  //           value: toValue,
-  //           to: toAccount,
-  //         })
-  //         .then((result) => {
-  //           console.log(result);
-  //           alert("SUCCESS");
-  //         })
-  //         .catch(alert);
-  //     });
-  //   };
+const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
+
+function TransferFunds({web3}) {
+  const [isTransferLoading, setIsTransferLoading] = useState(false);
+  const [toAccount, setToAccount] = useState('');
+  const [toValue, setToValue] = useState('');
+
+  const { contract:constituencyContract,isLoading: isCConstituencyContractLoading, error:constituencyContractError } = useContract(CONSTITUENCY_ADDRESS,CONSTITUENCYABI);
+  const {mutateAsync:constituencyTranferWETHAmount,isLoading:constituencyTransferWETHLoading,error:constituencyTransferWETHError} = useContractWrite(
+    constituencyContract,
+    "transferTo"
+  );
+  const handleTransferToContractor = async (event,data) => {
+    event.preventDefault();
+    setIsTransferLoading(true);
+    if(!toAccount && !toValue) return;
+    await constituencyTranferWETHAmount({
+      args: [toAccount, ethers.utils.parseEther(toValue)],
+    });
+    setIsTransferLoading(false);
+  };
+
   return (
     <Col md={6}>
       <Card className="constituency-card  constituency-form-card">
@@ -49,9 +54,10 @@ function TransferFunds(web3) {
             className="constituency-form-button-green"
             type="submit"
             style={{width:'fit-content',padding:5}}
-            onClick={() => {}}
+            onClick={handleTransferToContractor}
+            disabled={isTransferLoading}
           >
-            Transfer Funds
+            {isTransferLoading ? "Transcation in process":"Transfer Funds"}
           </Button>
         </Form>
       </Card>
