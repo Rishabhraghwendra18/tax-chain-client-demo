@@ -7,7 +7,7 @@ import CONSTITUENCYABI from "../../contractsABI/Constituency.json";
 
 const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
 
-function TransferFunds({web3}) {
+function TransferFunds({onSuccess}) {
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [toAccount, setToAccount] = useState('');
   const [toValue, setToValue] = useState('');
@@ -24,6 +24,7 @@ function TransferFunds({web3}) {
     await constituencyTranferWETHAmount({
       args: [toAccount, ethers.utils.parseEther(toValue)],
     });
+    await onSuccess();
     setIsTransferLoading(false);
   };
 

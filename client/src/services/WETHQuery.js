@@ -27,6 +27,8 @@ async function WETHQueryFromSource(srcAddress) {
         transactionHash
         wad
         blockTimestamp
+        dst
+        src
       }
     }`
     return await client.query(query).toPromise();

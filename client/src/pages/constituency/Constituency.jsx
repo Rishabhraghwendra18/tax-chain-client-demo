@@ -53,7 +53,7 @@ function Constituency() {
           <Fund name="Used Funds" value={`${constituencyUsedWETHAmount!== undefined ? bigNumberToEthers(constituencyUsedWETHAmount):'0.0'} WETH`}></Fund>
         </Row>
         <Row>
-          <TransferFunds></TransferFunds>
+          <TransferFunds onSuccess={getConstituencyTransfers}></TransferFunds>
           <Kyc web3={web3}></Kyc>
         </Row>
 

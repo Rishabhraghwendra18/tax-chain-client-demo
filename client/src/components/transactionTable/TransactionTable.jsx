@@ -28,9 +28,7 @@ function TransactionTable(props) {
           </tr>
         </thead>
         <tbody>
-          {props.tableData.map((row, index) => (
-            <TransactionRow key={index} row={row}></TransactionRow>
-          ))}
+            <TransactionRow row={props.tableData}></TransactionRow>
           {/* item1={row[0]?row[0]:""}
                             item2={row[1]?row[1]:""}
                             item3={row[2]?row[2]:""}
