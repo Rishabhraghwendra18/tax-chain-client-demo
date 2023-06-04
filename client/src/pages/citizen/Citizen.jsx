@@ -3,6 +3,7 @@ import { useContractWrite, useContractRead, useContract,useAddress } from "@thir
 import { Sepolia } from "@thirdweb-dev/chains";
 import { ethers } from "ethers";
 import { gql,cacheExchange, createClient, dedupExchange, fetchExchange } from "urql";
+import WETHQuery from "../../services/WETHQuery";
 import Navigation from "../../components/navigation/Navbar";
 import Header from "../../components/header/Header";
 import {
@@ -51,17 +52,7 @@ export default function Citizen() {
     [address],
   );
   const queryCitizenTransfers = async ()=>{
-    const query = gql`
-    {
-      transfers(
-        where: {dst: "${GOVT_ADDRESS}", src: "${address}"}
-      ) {
-        transactionHash
-        wad
-        blockTimestamp
-      }
-    }`
-    const {data} = await client.query(query).toPromise();
+    const {data}= await WETHQuery(GOVT_ADDRESS,address);
     setTranscationsList(data.transfers);
   }
   useEffect(()=>{
