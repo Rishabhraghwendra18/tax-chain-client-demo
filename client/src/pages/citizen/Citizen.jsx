@@ -1,8 +1,6 @@
 import React,{useState,useEffect} from "react";
 import { useContractWrite, useContractRead, useContract,useAddress,useDisconnect } from "@thirdweb-dev/react";
-import { Sepolia } from "@thirdweb-dev/chains";
 import { ethers } from "ethers";
-import { gql,cacheExchange, createClient, dedupExchange, fetchExchange } from "urql";
 import {WETHQuery} from "../../services/WETHQuery";
 import Navigation from "../../components/navigation/Navbar";
 import Header from "../../components/header/Header";
@@ -32,11 +30,8 @@ export default function Citizen() {
   const address = useAddress();
   const disconnect = useDisconnect();
   const [transcationsList, setTranscationsList] = useState([]);
+  const [taxAmount, setTaxAmount] = useState(0.1);
   const [isTxnLoading, setIsTxnLoading] = useState(false);
-  const client = createClient({
-    url: 'https://api.studio.thegraph.com/query/47824/weth-sepolia/version/latest',
-    exchanges: [dedupExchange, cacheExchange, fetchExchange]
-  });
   const { contract:WETHContract,isLoading: isContractLoading, error:contractError } = useContract(WETH_ADDRESS,WETHABI);
   const { mutateAsync:WETHContractDepositMutateAsync, isLoading:WETHContractDepositIsLoading, error:WETHContractDepositError } = useContractWrite(
     WETHContract,
@@ -62,16 +57,17 @@ export default function Citizen() {
     return disconnect;
   },[address])
 
-  const convertETHToWETH = async () =>{
+  const convertETHToWETH = async (value) =>{
+    if(value <=0) return;
     await WETHContractDepositMutateAsync({
       overrides:{
-        value: ethers.utils.parseEther("0.1"),
+        value: ethers.utils.parseEther(value),
       },
     })
   }
   const transferWETHToGovtContract = async () =>{
    await WETHContractTransferMutateAsync({
-      args:[GOVT_ADDRESS,ethers.utils.parseEther("0.1")],
+      args:[GOVT_ADDRESS,ethers.utils.parseEther(taxAmount.toString())],
     })
     await queryCitizenTransfers();
   }
@@ -79,8 +75,9 @@ export default function Citizen() {
   const handlePayTax = async (event) =>{
     event.preventDefault();
     setIsTxnLoading(true);
-    if(userWETHBalance < ethers.utils.parseEther("0.1")){
-      await convertETHToWETH();
+    console.log("value: ",taxAmount)
+    if(userWETHBalance < ethers.utils.parseEther(taxAmount.toString())){
+      await convertETHToWETH(taxAmount.toString());
     }
     await transferWETHToGovtContract();
     setIsTxnLoading(false);
@@ -117,7 +114,7 @@ export default function Citizen() {
                   <Form className="d-flex flex-column">
                     <Form>
                       <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Amount" value={0.1}/>
+                        <Form.Control type="number" placeholder="Amount" value={0.1} onChange={(event)=>setTaxAmount(event.target.value)}/>
                       </Form.Group>
                     </Form>
                     <Button

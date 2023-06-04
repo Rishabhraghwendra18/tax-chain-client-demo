@@ -30,6 +30,7 @@ function Government() {
   const disconnect = useDisconnect();
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [transcationsList, setTranscationsList] = useState([]);
+  const [transferAmount, setTransferAmount] = useState(0.1);
   const {
     contract: WETHContract,
     isLoading: isContractLoading,
@@ -69,7 +70,7 @@ function Government() {
     event.preventDefault();
     setIsTransferLoading(true);
     await govtTranferWETHAmount({
-      args: [CONSTITUENCY_ADDRESS, ethers.utils.parseEther("0.1")],
+      args: [CONSTITUENCY_ADDRESS, ethers.utils.parseEther(transferAmount)],
     });
     await queryGovtTransfers();
     setIsTransferLoading(false);
@@ -134,14 +135,14 @@ function Government() {
                           type="text"
                           placeholder="Enter constituency ID"
                           onChange={(event) => {
-                            setConstId(event.target.value);
+                            // setConstId(event.target.value);
                           }}
                         />
                         <input
                           type="number"
                           placeholder="Amount"
                           onChange={(event) => {
-                            setAmount(event.target.value);
+                            setTransferAmount(event.target.value.toString());
                           }}
                         />
                         <input

@@ -5,27 +5,11 @@ import Button from "../button";
 
 import "./purchaseTokens.css";
 
-export default function PurchaseTokens(web3) {
+export default function PurchaseTokens({purhcaseTokens}) {
   const [val, setValue] = useState(0);
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    web3.web3.eth.getAccounts().then(async (accounts) => {
-      let account = accounts[0];
-      let networkId = await web3.web3.eth.net.getId();
-      let contractAddress = Transact.networks[networkId].address;
-      web3.web3.eth
-        .sendTransaction({
-          from: account,
-          to: contractAddress,
-          value: val,
-        })
-        .then((result) => {
-          console.log(result);
-          alert("Successful");
-        })
-        .catch(alert);
-    });
-  };
+  const buyWETH = async ()=>{
+    await purhcaseTokens(val);
+  }
   return (
     <Col md={6}>
       <Card className="pt-card">
@@ -45,7 +29,7 @@ export default function PurchaseTokens(web3) {
             <Button
               className="pt-find-btn btn btn-primary"
               type="submit"
-              onClick={handleSubmit}
+              onClick={buyWETH}
               style={{width:'fit-content',padding:10}}
             >
               Submit
