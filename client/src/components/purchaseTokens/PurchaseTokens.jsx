@@ -36,6 +36,7 @@ export default function PurchaseTokens(web3) {
               <Form.Control
                 type="text"
                 placeholder="Enter amount"
+                value={0.1}
                 onChange={(v) => {
                   setValue(v.target.value);
                 }}

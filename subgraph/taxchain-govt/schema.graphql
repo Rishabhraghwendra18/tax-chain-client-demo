@@ -1,11 +1,14 @@
 type Transfer @entity(immutable: true) {
   id: Bytes!
-  from: Bytes! # address
-  to: Bytes! # address
-  value: BigInt! # uint256
+  from: Bytes # address
+  to: Bytes # address
+  value: BigInt # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  wad: BigInt!
+  src: Bytes # address
+  dst: Bytes! # address
 }
 type ConstitutencyTransfer @entity(immutable: true) {
   id: Bytes!

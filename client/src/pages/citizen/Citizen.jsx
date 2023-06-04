@@ -1,4 +1,7 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
+import { useContractWrite, useContractRead, useContract,useAddress } from "@thirdweb-dev/react";
+import { Sepolia } from "@thirdweb-dev/chains";
+import { ethers } from "ethers";
 import Navigation from "../../components/navigation/Navbar";
 import Header from "../../components/header/Header";
 import {
@@ -17,18 +20,61 @@ import GovernmentTable from "../../components/Tables/GovernmentTable.jsx";
 import CurrentTokens from "../../components/currentTokens/CurrentTokens";
 import PurchaseTokens from "../../components/purchaseTokens/PurchaseTokens";
 import Button from "../../components/button";
+import WETHABI from "../../contractsABI/WETH.json";
 // import Transact from "../../contracts/Transact.json";
 import "./citizen.css";
 
+const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
+const GOVT_ADDRESS ='0x2523886B04731Ce03AeCcad82062efba81CAcC07';
 export default function Citizen() {
+  const address = useAddress();
+  const [isTxnLoading, setIsTxnLoading] = useState(false);
+  const { contract:WETHContract,isLoading: isContractLoading, error:contractError } = useContract(WETH_ADDRESS,WETHABI);
+  const { mutateAsync:WETHContractDepositMutateAsync, isLoading:WETHContractDepositIsLoading, error:WETHContractDepositError } = useContractWrite(
+    WETHContract,
+    "deposit",
+  );
+  const { mutateAsync:WETHContractTransferMutateAsync, isLoading:WETHContractTransferIsLoading, error:WETHContractTransferError } = useContractWrite(
+    WETHContract,
+    "transfer",
+  );
+  
+  const { data:userWETHBalance, isLoading, error } = useContractRead(
+    WETHContract,
+    "balanceOf",
+    [address],
+  );
+
+  const convertETHToWETH = async () =>{
+    await WETHContractDepositMutateAsync({
+      overrides:{
+        value: ethers.utils.parseEther("0.1"),
+      },
+    })
+  }
+  const transferWETHToGovtContract = async () =>{
+   await WETHContractTransferMutateAsync({
+      args:[GOVT_ADDRESS,ethers.utils.parseEther("0.1")],
+    })
+  }
+
+  const handlePayTax = async (event) =>{
+    event.preventDefault();
+    setIsTxnLoading(true);
+    if(userWETHBalance < ethers.utils.parseEther("0.1")){
+      await convertETHToWETH();
+    }
+    await transferWETHToGovtContract();
+    setIsTxnLoading(false);
+  }
   return (
     <div className="">
       <Navigation></Navigation>
       <Header heading="Citizen: Rohan Singh"></Header>
       <Container>
         <Row>
-          <PurchaseTokens web3={web3}></PurchaseTokens>
-          <CurrentTokens name="Current Tokens" value="2392138"></CurrentTokens>
+          <PurchaseTokens purhcaseTokens={convertETHToWETH}></PurchaseTokens>
+          <CurrentTokens name="Current Balance" value="2392138"></CurrentTokens>
         </Row>
       </Container>
       <div className="PayTax my-5">
@@ -43,26 +89,27 @@ export default function Citizen() {
               <Card className="table-card">
                 <Card.Body>
                   <h2>Pay Tax</h2>
-                  {true ? (
+                  {/* {isTxnLoading ? (
                     <Alert variant="success" className="mb-5">
-                      {"transaction complete"}
+                      {"Transaction complete"}
                     </Alert>
                   ) : (
-                    ""
-                  )}
+                    "Transcation in process"
+                  )} */}
                   <Form className="d-flex flex-column">
                     <Form>
                       <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Amount" />
+                        <Form.Control type="number" placeholder="Amount" value={0.1}/>
                       </Form.Group>
                     </Form>
                     <Button
                       type="submit"
                       className="constituency-find-btn"
-                      onClick={() => {}}
+                      onClick={handlePayTax}
                       style={{width:'fit-content',padding:5}}
+                      disabled={isTxnLoading}
                     >
-                      Submit
+                      {isTxnLoading ? "Transcation in Process":"Submit"}
                     </Button>
                   </Form>
                 </Card.Body>

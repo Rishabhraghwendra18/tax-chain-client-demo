@@ -52,43 +52,55 @@ export class Transfer extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
-  get from(): Bytes {
+  get from(): Bytes | null {
     let value = this.get("from");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return null;
     } else {
       return value.toBytes();
     }
   }
 
-  set from(value: Bytes) {
-    this.set("from", Value.fromBytes(value));
+  set from(value: Bytes | null) {
+    if (!value) {
+      this.unset("from");
+    } else {
+      this.set("from", Value.fromBytes(<Bytes>value));
+    }
   }
 
-  get to(): Bytes {
+  get to(): Bytes | null {
     let value = this.get("to");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return null;
     } else {
       return value.toBytes();
     }
   }
 
-  set to(value: Bytes) {
-    this.set("to", Value.fromBytes(value));
+  set to(value: Bytes | null) {
+    if (!value) {
+      this.unset("to");
+    } else {
+      this.set("to", Value.fromBytes(<Bytes>value));
+    }
   }
 
-  get value(): BigInt {
+  get value(): BigInt | null {
     let value = this.get("value");
     if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
+      return null;
     } else {
       return value.toBigInt();
     }
   }
 
-  set value(value: BigInt) {
-    this.set("value", Value.fromBigInt(value));
+  set value(value: BigInt | null) {
+    if (!value) {
+      this.unset("value");
+    } else {
+      this.set("value", Value.fromBigInt(<BigInt>value));
+    }
   }
 
   get blockNumber(): BigInt {
@@ -128,6 +140,49 @@ export class Transfer extends Entity {
 
   set transactionHash(value: Bytes) {
     this.set("transactionHash", Value.fromBytes(value));
+  }
+
+  get wad(): BigInt {
+    let value = this.get("wad");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set wad(value: BigInt) {
+    this.set("wad", Value.fromBigInt(value));
+  }
+
+  get src(): Bytes | null {
+    let value = this.get("src");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set src(value: Bytes | null) {
+    if (!value) {
+      this.unset("src");
+    } else {
+      this.set("src", Value.fromBytes(<Bytes>value));
+    }
+  }
+
+  get dst(): Bytes {
+    let value = this.get("dst");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set dst(value: Bytes) {
+    this.set("dst", Value.fromBytes(value));
   }
 }
 
