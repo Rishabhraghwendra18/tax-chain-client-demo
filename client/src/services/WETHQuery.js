@@ -18,4 +18,17 @@ async function WETHQuery(dstAddress,srcAddress) {
     }`
     return await client.query(query).toPromise();
 }
-export default WETHQuery;
+async function WETHQueryFromSource(srcAddress) {
+    const query = gql`
+    {
+      transfers(
+        where: {src: "${srcAddress}"}
+      ) {
+        transactionHash
+        wad
+        blockTimestamp
+      }
+    }`
+    return await client.query(query).toPromise();
+}
+export {WETHQuery,WETHQueryFromSource};

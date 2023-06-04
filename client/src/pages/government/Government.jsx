@@ -7,7 +7,7 @@ import {
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { gql,cacheExchange, createClient, dedupExchange, fetchExchange } from "urql";
-import WETHQuery from "../../services/WETHQuery";
+import {WETHQueryFromSource} from "../../services/WETHQuery";
 import { bigNumberToEthers } from "../../utils/bigNumberToEther";
 import Navigation from "../../components/navigation/Navbar";
 import { Row, Col, Card, Container } from "react-bootstrap";
@@ -59,7 +59,7 @@ function Government() {
     queryGovtTransfers();
   },[])
   const queryGovtTransfers = async ()=>{
-    const {data} = await WETHQuery(CONSTITUENCY_ADDRESS,GOVT_ADDRESS);
+    const {data} = await WETHQueryFromSource(GOVT_ADDRESS);
     setTranscationsList(data.transfers);
   }
   const handleTransferToConstituency = async (event) => {

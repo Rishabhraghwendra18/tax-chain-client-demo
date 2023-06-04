@@ -1,6 +1,7 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { useContractWrite, useContractRead, useContract,useAddress } from "@thirdweb-dev/react";
 import { Row, Col, Button, Form, Card, Container } from "react-bootstrap";
+import {WETHQueryFromSource} from "../../services/WETHQuery";
 import { bigNumberToEthers } from "../../utils/bigNumberToEther";
 import Navigation from "../../components/navigation/Navbar";
 import "./constituency.css";
@@ -19,6 +20,7 @@ const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
 function Constituency() {
   const address = useAddress();
   const [isTransferLoading, setIsTransferLoading] = useState(false);
+  const [transcationList, setTranscationList] = useState([]);
   const { contract:WETHContract,isLoading: isContractLoading, error:contractError } = useContract(WETH_ADDRESS,WETHABI);
   const { contract:constituencyContract,isLoading: isCConstituencyContractLoading, error:constituencyContractError } = useContract(CONSTITUENCY_ADDRESS,CONSTITUENCYABI);
   
@@ -31,6 +33,15 @@ function Constituency() {
     constituencyContract,
     "usedFunds"
   );
+
+  useEffect(()=>{
+    getConstituencyTransfers();
+  },[]);
+
+  const getConstituencyTransfers = async () =>{
+    const {data}=await WETHQueryFromSource(CONSTITUENCY_ADDRESS);
+    setTranscationList(data.transfers);
+  }
 
   return (
     <div>
@@ -76,7 +87,7 @@ function Constituency() {
           <Transactions
             heading="Previous Funds Transfer"
             tableHeaders={["ContractId", "Amount"]}
-            tableData={[]}
+            tableData={transcationList}
           ></Transactions>
         </div>
       </Container>

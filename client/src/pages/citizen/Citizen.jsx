@@ -3,7 +3,7 @@ import { useContractWrite, useContractRead, useContract,useAddress } from "@thir
 import { Sepolia } from "@thirdweb-dev/chains";
 import { ethers } from "ethers";
 import { gql,cacheExchange, createClient, dedupExchange, fetchExchange } from "urql";
-import WETHQuery from "../../services/WETHQuery";
+import {WETHQuery} from "../../services/WETHQuery";
 import Navigation from "../../components/navigation/Navbar";
 import Header from "../../components/header/Header";
 import {
