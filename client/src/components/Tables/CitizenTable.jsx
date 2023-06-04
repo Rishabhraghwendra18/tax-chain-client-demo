@@ -23,7 +23,6 @@ function CitizenTable(props) {
         <tbody>
           {props.tableData.map((item, index) => (
             <tr key={index}>
-              {console.log("da",convertBlockcTimeStampToStandardTime(item.blockTimestamp))}
               <td key={item.date}>{convertBlockcTimeStampToStandardTime(item.blockTimestamp)}</td>
               <td key={item.amount}>{bigNumberToEthers(item.wad)}</td>
             </tr>

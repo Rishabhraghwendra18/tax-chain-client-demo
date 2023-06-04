@@ -50,23 +50,23 @@ export default function Citizen() {
     "balanceOf",
     [address],
   );
+  const queryCitizenTransfers = async ()=>{
+    const query = gql`
+    {
+      transfers(
+        where: {dst: "${GOVT_ADDRESS}", src: "${address}"}
+      ) {
+        transactionHash
+        wad
+        blockTimestamp
+      }
+    }`
+    const {data} = await client.query(query).toPromise();
+    setTranscationsList(data.transfers);
+  }
   useEffect(()=>{
     if(!address) return;
-    (async ()=>{
-      const query = gql`
-      {
-        transfers(
-          where: {dst: "${GOVT_ADDRESS}", src: "${address}"}
-        ) {
-          transactionHash
-          wad
-          blockTimestamp
-        }
-      }`
-      const {data} = await client.query(query).toPromise();
-      setTranscationsList(data.transfers);
-      console.log("data: ",data.transfers);
-    })()
+    queryCitizenTransfers();
   },[address])
 
   const convertETHToWETH = async () =>{
@@ -80,6 +80,7 @@ export default function Citizen() {
    await WETHContractTransferMutateAsync({
       args:[GOVT_ADDRESS,ethers.utils.parseEther("0.1")],
     })
+    await queryCitizenTransfers();
   }
 
   const handlePayTax = async (event) =>{
