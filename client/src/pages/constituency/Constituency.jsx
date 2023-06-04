@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import { useContractWrite, useContractRead, useContract,useAddress } from "@thirdweb-dev/react";
+import { useContractWrite, useContractRead, useContract,useAddress,useDisconnect } from "@thirdweb-dev/react";
 import { Row, Col, Button, Form, Card, Container } from "react-bootstrap";
 import {WETHQueryFromSource} from "../../services/WETHQuery";
 import { bigNumberToEthers } from "../../utils/bigNumberToEther";
@@ -19,6 +19,7 @@ const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
 
 function Constituency() {
   const address = useAddress();
+  const disconnect = useDisconnect();
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [transcationList, setTranscationList] = useState([]);
   const { contract:WETHContract,isLoading: isContractLoading, error:contractError } = useContract(WETH_ADDRESS,WETHABI);
@@ -36,6 +37,7 @@ function Constituency() {
 
   useEffect(()=>{
     getConstituencyTransfers();
+    return disconnect;
   },[]);
 
   const getConstituencyTransfers = async () =>{

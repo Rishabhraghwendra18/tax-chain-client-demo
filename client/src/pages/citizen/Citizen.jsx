@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import { useContractWrite, useContractRead, useContract,useAddress } from "@thirdweb-dev/react";
+import { useContractWrite, useContractRead, useContract,useAddress,useDisconnect } from "@thirdweb-dev/react";
 import { Sepolia } from "@thirdweb-dev/chains";
 import { ethers } from "ethers";
 import { gql,cacheExchange, createClient, dedupExchange, fetchExchange } from "urql";
@@ -30,6 +30,7 @@ const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
 const GOVT_ADDRESS ='0x2523886B04731Ce03AeCcad82062efba81CAcC07';
 export default function Citizen() {
   const address = useAddress();
+  const disconnect = useDisconnect();
   const [transcationsList, setTranscationsList] = useState([]);
   const [isTxnLoading, setIsTxnLoading] = useState(false);
   const client = createClient({
@@ -58,6 +59,7 @@ export default function Citizen() {
   useEffect(()=>{
     if(!address) return;
     queryCitizenTransfers();
+    return disconnect;
   },[address])
 
   const convertETHToWETH = async () =>{

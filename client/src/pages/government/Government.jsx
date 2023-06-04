@@ -4,6 +4,7 @@ import {
   useContractRead,
   useContract,
   useAddress,
+  useDisconnect
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { gql,cacheExchange, createClient, dedupExchange, fetchExchange } from "urql";
@@ -26,6 +27,7 @@ const CONSTITUENCY_ADDRESS = "0x089AC0B06277915174e57DbDF361B026D77209F6";
 
 function Government() {
   const address = useAddress();
+  const disconnect = useDisconnect();
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [transcationsList, setTranscationsList] = useState([]);
   const {
@@ -57,6 +59,7 @@ function Government() {
   
   useEffect(()=>{
     queryGovtTransfers();
+    return disconnect;
   },[])
   const queryGovtTransfers = async ()=>{
     const {data} = await WETHQueryFromSource(GOVT_ADDRESS);

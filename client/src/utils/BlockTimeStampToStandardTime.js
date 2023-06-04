@@ -1,7 +1,8 @@
 import { ethers } from "ethers";
 
 function convertBlockcTimeStampToStandardTime(blockTimestamp) {
-    return new Date(blockTimestamp * 1000).toLocaleDateString();
+    const date = new Date(blockTimestamp * 1000);
+    return `${date.toLocaleDateString()}; ${date.toLocaleTimeString()}`;
 }
 
 export {convertBlockcTimeStampToStandardTime};
