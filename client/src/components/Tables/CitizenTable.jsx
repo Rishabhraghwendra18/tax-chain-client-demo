@@ -1,5 +1,7 @@
 import React from "react";
 import { Table, Card } from "react-bootstrap";
+import { bigNumberToEthers } from "../../utils/bigNumberToEther";
+import { convertBlockcTimeStampToStandardTime } from "../../utils/BlockTimeStampToStandardTime";
 
 function CitizenTable(props) {
   return (
@@ -21,8 +23,9 @@ function CitizenTable(props) {
         <tbody>
           {props.tableData.map((item, index) => (
             <tr key={index}>
-              <td key={item.date}>{item.date}</td>
-              <td key={item.amount}>{item.amount}</td>
+              {console.log("da",convertBlockcTimeStampToStandardTime(item.blockTimestamp))}
+              <td key={item.date}>{convertBlockcTimeStampToStandardTime(item.blockTimestamp)}</td>
+              <td key={item.amount}>{bigNumberToEthers(item.wad)}</td>
             </tr>
           ))}
         </tbody>

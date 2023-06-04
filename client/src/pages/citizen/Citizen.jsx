@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import { useContractWrite, useContractRead, useContract,useAddress } from "@thirdweb-dev/react";
 import { Sepolia } from "@thirdweb-dev/chains";
 import { ethers } from "ethers";
+import { gql,cacheExchange, createClient, dedupExchange, fetchExchange } from "urql";
 import Navigation from "../../components/navigation/Navbar";
 import Header from "../../components/header/Header";
 import {
@@ -28,7 +29,12 @@ const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
 const GOVT_ADDRESS ='0x2523886B04731Ce03AeCcad82062efba81CAcC07';
 export default function Citizen() {
   const address = useAddress();
+  const [transcationsList, setTranscationsList] = useState([]);
   const [isTxnLoading, setIsTxnLoading] = useState(false);
+  const client = createClient({
+    url: 'https://api.studio.thegraph.com/query/47824/weth-sepolia/version/latest',
+    exchanges: [dedupExchange, cacheExchange, fetchExchange]
+  });
   const { contract:WETHContract,isLoading: isContractLoading, error:contractError } = useContract(WETH_ADDRESS,WETHABI);
   const { mutateAsync:WETHContractDepositMutateAsync, isLoading:WETHContractDepositIsLoading, error:WETHContractDepositError } = useContractWrite(
     WETHContract,
@@ -44,6 +50,24 @@ export default function Citizen() {
     "balanceOf",
     [address],
   );
+  useEffect(()=>{
+    if(!address) return;
+    (async ()=>{
+      const query = gql`
+      {
+        transfers(
+          where: {dst: "${GOVT_ADDRESS}", src: "${address}"}
+        ) {
+          transactionHash
+          wad
+          blockTimestamp
+        }
+      }`
+      const {data} = await client.query(query).toPromise();
+      setTranscationsList(data.transfers);
+      console.log("data: ",data.transfers);
+    })()
+  },[address])
 
   const convertETHToWETH = async () =>{
     await WETHContractDepositMutateAsync({
@@ -81,7 +105,7 @@ export default function Citizen() {
         <Row>
           <Col sx={12} md={8} id="table">
             <div className="payTax-table">
-              <CitizenTable tableData={[]}></CitizenTable>
+              <CitizenTable tableData={transcationsList}></CitizenTable>
             </div>
           </Col>
           <Col sx={12} md={4}>
@@ -116,12 +140,12 @@ export default function Citizen() {
               </Card>
             </div>
           </Col>
-          <Col className="mt-5">
+          {/* <Col className="mt-5">
             <GovernmentTable
               heading={"Track You Tax"}
-              tableData={[]}
+              tableData={transcationsList}
             ></GovernmentTable>
-          </Col>
+          </Col> */}
         </Row>
       </div>
       <Footer></Footer>

@@ -1,5 +1,7 @@
 import React from "react";
 import { Table, Card } from "react-bootstrap";
+import {bigNumberToEthers} from "../../utils/bigNumberToEther";
+import {convertBlockcTimeStampToStandardTime} from "../../utils/BlockTimeStampToStandardTime";
 
 function GovernmentTable(props) {
   return (
@@ -16,15 +18,15 @@ function GovernmentTable(props) {
           <tr>
             <th>Date</th>
             <th>Amount</th>
-            <th>Constituency</th>
+            {/* <th>Constituency</th> */}
           </tr>
         </thead>
         <tbody>
           {props.tableData.map((item, index) => (
             <tr key={index}>
-              <td key={item.date}>{item.date}</td>
-              <td key={item.amount}>{item.amount}</td>
-              <td key={item.constituency}>{item.constituency}</td>
+              <td key={item.date}>{convertBlockcTimeStampToStandardTime(item.blockTimestamp)}</td>
+              <td key={item.amount}>{bigNumberToEthers(item.wad)}</td>
+              {/* <td key={item.constituency}>{item.constituency}</td> */}
             </tr>
           ))}
         </tbody>
