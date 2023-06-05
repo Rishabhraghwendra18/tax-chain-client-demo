@@ -16,7 +16,6 @@ import CONSTITUENCYABI from "../../contractsABI/Constituency.json";
 import REGISTERYABI from "../../contractsABI/Registery.json";
 
 const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
-const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
 const REGISTERY_ADDRESS = import.meta.env.VITE_REGISTERY_ADDRESS;
 
 function Constituency() {
@@ -24,7 +23,7 @@ function Constituency() {
   const disconnect = useDisconnect();
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [transcationList, setTranscationList] = useState([]);
-  const [constituencyAddress, setConstituencyAddress] = useState(CONSTITUENCY_ADDRESS);
+
   const { contract:registeryContract,isLoading: isCregisteryContractLoading, error:registeryContractError } = useContract(REGISTERY_ADDRESS,REGISTERYABI);
 
   const {data:userConstituency,isLoading:userConstituencyIsLoading,error:userConstituencyError} = useContractRead(
@@ -47,11 +46,12 @@ function Constituency() {
   );
 
   useEffect(()=>{
+    if(!userConstituency) return;
     getConstituencyTransfers();
-    return disconnect;
-  },[]);
+  },[userConstituency]);
+  useEffect(()=>disconnect,[]);
   const getConstituencyTransfers = async () =>{
-    const {data}=await WETHQueryFromSource(CONSTITUENCY_ADDRESS);
+    const {data}=await WETHQueryFromSource(userConstituency);
     setTranscationList(data.transfers);
   }
 
@@ -65,7 +65,7 @@ function Constituency() {
           <Fund name="Used Funds" value={`${constituencyUsedWETHAmount!== undefined ? bigNumberToEthers(constituencyUsedWETHAmount):'0.0'} WETH`}></Fund>
         </Row>
         <Row>
-          <TransferFunds onSuccess={getConstituencyTransfers}></TransferFunds>
+          <TransferFunds onSuccess={getConstituencyTransfers} userConstituency={userConstituency}></TransferFunds>
           <Kyc web3={web3}></Kyc>
         </Row>
 

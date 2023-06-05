@@ -5,14 +5,12 @@ import { Col, Form, Card } from "react-bootstrap";
 import Button from "../button";
 import CONSTITUENCYABI from "../../contractsABI/Constituency.json";
 
-const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
-
-function TransferFunds({onSuccess}) {
+function TransferFunds({onSuccess,userConstituency}) {
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [toAccount, setToAccount] = useState('');
   const [toValue, setToValue] = useState('');
 
-  const { contract:constituencyContract,isLoading: isCConstituencyContractLoading, error:constituencyContractError } = useContract(CONSTITUENCY_ADDRESS,CONSTITUENCYABI);
+  const { contract:constituencyContract,isLoading: isCConstituencyContractLoading, error:constituencyContractError } = useContract(userConstituency,CONSTITUENCYABI);
   const {mutateAsync:constituencyTranferWETHAmount,isLoading:constituencyTransferWETHLoading,error:constituencyTransferWETHError} = useContractWrite(
     constituencyContract,
     "transferTo"
@@ -29,7 +27,7 @@ function TransferFunds({onSuccess}) {
       
     } catch (error) {
       console.log("Erro while transfering funds to contractors: ",error);
-      alert(error?.data?.message);
+      alert("Error while tranfering funds",error?.data?.message);
     }
     setIsTransferLoading(false);
   };
