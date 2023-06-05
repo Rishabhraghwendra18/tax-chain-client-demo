@@ -63,8 +63,8 @@ contract Registery{
         userConstituencies[msg.sender] = address(constituency);
         isValidConstiuencies[address(constituency)] = true;
     }
-    function getConstituency() public view returns (address) {
-        return userConstituencies[msg.sender];
+    function getConstituency(address _user) public view returns (address) {
+        return userConstituencies[_user];
     }
     function isValidConstiuency(address _contituency) public view returns (bool) {
         return isValidConstiuencies[_contituency];

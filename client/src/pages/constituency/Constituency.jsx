@@ -13,22 +13,33 @@ import Transactions from "../../components/transcations/Transactions";
 import Kyc from "../../components/kyc/Kyc.jsx";
 import WETHABI from "../../contractsABI/WETH.json";
 import CONSTITUENCYABI from "../../contractsABI/Constituency.json";
+import REGISTERYABI from "../../contractsABI/Registery.json";
 
 const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
 const CONSTITUENCY_ADDRESS= '0x089AC0B06277915174e57DbDF361B026D77209F6';
+const REGISTERY_ADDRESS = import.meta.env.VITE_REGISTERY_ADDRESS;
 
 function Constituency() {
   const address = useAddress();
   const disconnect = useDisconnect();
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [transcationList, setTranscationList] = useState([]);
+  const [constituencyAddress, setConstituencyAddress] = useState(CONSTITUENCY_ADDRESS);
+  const { contract:registeryContract,isLoading: isCregisteryContractLoading, error:registeryContractError } = useContract(REGISTERY_ADDRESS,REGISTERYABI);
+
+  const {data:userConstituency,isLoading:userConstituencyIsLoading,error:userConstituencyError} = useContractRead(
+    registeryContract,
+    "getConstituency",
+    [address]
+  );
+
   const { contract:WETHContract,isLoading: isContractLoading, error:contractError } = useContract(WETH_ADDRESS,WETHABI);
-  const { contract:constituencyContract,isLoading: isCConstituencyContractLoading, error:constituencyContractError } = useContract(CONSTITUENCY_ADDRESS,CONSTITUENCYABI);
-  
+  const { contract:constituencyContract,isLoading: isCConstituencyContractLoading, error:constituencyContractError } = useContract(userConstituency,CONSTITUENCYABI);
+
   const { data:constituencyWETHBalance, isLoading, error } = useContractRead(
     WETHContract,
     "balanceOf",
-    [CONSTITUENCY_ADDRESS]
+    [userConstituency]
   );
   const {data:constituencyUsedWETHAmount,isLoading:constituencyUsedWETHLoading,error:constituencyUsedWETHError} = useContractRead(
     constituencyContract,
@@ -39,7 +50,6 @@ function Constituency() {
     getConstituencyTransfers();
     return disconnect;
   },[]);
-
   const getConstituencyTransfers = async () =>{
     const {data}=await WETHQueryFromSource(CONSTITUENCY_ADDRESS);
     setTranscationList(data.transfers);
@@ -48,7 +58,7 @@ function Constituency() {
   return (
     <div>
       <Navigation></Navigation>
-      <Header heading="Malviya Nagar Constituency"></Header>
+      <Header heading={`Constituency Address: ${userConstituency}`}></Header>
       <Container className="my-5">
         <Row>
           <Fund name="Alloted Funds" value={`${constituencyWETHBalance!==undefined ? bigNumberToEthers(constituencyWETHBalance):'0.0'} WETH`}></Fund>

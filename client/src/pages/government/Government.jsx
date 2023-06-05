@@ -24,10 +24,12 @@ import "./government.css";
 const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
 const GOVT_ADDRESS = import.meta.env.VITE_GOVT_ADDRESS;
 const CONSTITUENCY_ADDRESS = "0x089AC0B06277915174e57DbDF361B026D77209F6";
+const REGISTERY_ADDRESS = import.meta.env.VITE_REGISTERY_ADDRESS;
 
 function Government() {
   const address = useAddress();
   const disconnect = useDisconnect();
+  const [constituencyAddress, setConstituencyAddress] = useState('');
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [transcationsList, setTranscationsList] = useState([]);
   const [transferAmount, setTransferAmount] = useState(0.1);
@@ -69,16 +71,20 @@ function Government() {
   const handleTransferToConstituency = async (event) => {
     event.preventDefault();
     setIsTransferLoading(true);
-    await govtTranferWETHAmount({
-      args: [CONSTITUENCY_ADDRESS, ethers.utils.parseEther(transferAmount)],
-    });
-    await queryGovtTransfers();
+    try {
+      await govtTranferWETHAmount({
+        args: [constituencyAddress, ethers.utils.parseEther(transferAmount)],
+      });
+      await queryGovtTransfers();
+    } catch (error) {
+      console.log("error occurent in govt: ",error);
+    }
     setIsTransferLoading(false);
   };
   return (
     <>
       <Navigation></Navigation>
-      <Header heading="Government of India" tagLine={GOVT_ADDRESS}></Header>
+      <Header heading={`Govt Address: ${GOVT_ADDRESS}`}></Header>
       <Container>
         <div className="Government mb-5">
           <Row>
@@ -135,7 +141,7 @@ function Government() {
                           type="text"
                           placeholder="Enter constituency ID"
                           onChange={(event) => {
-                            // setConstId(event.target.value);
+                            setConstituencyAddress(event.target.value);
                           }}
                         />
                         <input
@@ -169,7 +175,7 @@ function Government() {
             </Col>
           </Row>
           <Row>
-            <AddConstituency web3={web3}></AddConstituency>
+            <AddConstituency></AddConstituency>
           </Row>
         </div>
       </Container>
