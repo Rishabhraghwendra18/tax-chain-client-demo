@@ -22,7 +22,7 @@ import GOVTABI from "../../contractsABI/Govt.json";
 import "./government.css";
 
 const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
-const GOVT_ADDRESS = "0x2523886B04731Ce03AeCcad82062efba81CAcC07";
+const GOVT_ADDRESS = import.meta.env.VITE_GOVT_ADDRESS;
 const CONSTITUENCY_ADDRESS = "0x089AC0B06277915174e57DbDF361B026D77209F6";
 
 function Government() {

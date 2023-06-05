@@ -25,7 +25,7 @@ import WETHABI from "../../contractsABI/WETH.json";
 import "./citizen.css";
 
 const WETH_ADDRESS = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
-const GOVT_ADDRESS ='0x2523886B04731Ce03AeCcad82062efba81CAcC07';
+const GOVT_ADDRESS =import.meta.env.VITE_GOVT_ADDRESS;
 export default function Citizen() {
   const address = useAddress();
   const disconnect = useDisconnect();

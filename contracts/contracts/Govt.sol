@@ -3,10 +3,14 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+interface IRegistery {
+    function isValidConstiuency(address _contituency) external view returns (bool);
+}
 contract Govt {
     address public govtAddress;
     uint public usedFunds;
     IERC20 erc20TokenAddress;
+    IRegistery registery;
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     modifier onlyOwner() {
@@ -14,9 +18,10 @@ contract Govt {
         _;
     }
 
-    constructor(address _erc20TokenAddress) {
+    constructor(address _erc20TokenAddress,address _registery) {
         govtAddress = msg.sender;
         erc20TokenAddress = IERC20(_erc20TokenAddress);
+        registery = IRegistery(_registery);
     }
 
     function setGovtAddress(address _govtAddress) public onlyOwner {
@@ -28,6 +33,7 @@ contract Govt {
     }
 
     function transferTo(address _to, uint _amount) public onlyOwner {
+        require(registery.isValidConstiuency(_to),"Not a valid constituency");
         uint size;
         assembly {
             size := extcodesize(_to)
