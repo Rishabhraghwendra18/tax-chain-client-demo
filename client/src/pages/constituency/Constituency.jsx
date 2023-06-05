@@ -88,7 +88,7 @@ function Constituency() {
           </Card>
           <Transactions
             heading="Previous Funds Transfer"
-            tableHeaders={["ContractId", "Amount"]}
+            tableHeaders={["Transcation ID","ContractId", "Amount"]}
             tableData={transcationList}
           ></Transactions>
         </div>

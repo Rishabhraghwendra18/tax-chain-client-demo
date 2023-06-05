@@ -17,6 +17,7 @@ function GovernmentTable(props) {
         <thead>
           <tr>
             <th>Date</th>
+            <th>Transcation ID</th>
             <th>Amount</th>
             {/* <th>Constituency</th> */}
           </tr>
@@ -24,8 +25,9 @@ function GovernmentTable(props) {
         <tbody>
           {props.tableData.map((item, index) => (
             <tr key={index}>
-              <td key={item.date}>{convertBlockcTimeStampToStandardTime(item.blockTimestamp)}</td>
-              <td key={item.amount}>{bigNumberToEthers(item.wad)}</td>
+              <td>{convertBlockcTimeStampToStandardTime(item.blockTimestamp)}</td>
+              <td>{item.transactionHash}</td>
+              <td>{bigNumberToEthers(item.wad)}</td>
               {/* <td key={item.constituency}>{item.constituency}</td> */}
             </tr>
           ))}

@@ -3,15 +3,17 @@ import React from "react";
 import { bigNumberToEthers } from "../../utils/bigNumberToEther";
 
 function TransactionRow(props) {
+  {console.log("data table: ",props.row)}
   return (
-    <tr>
+    <>
       {props.row.map((item,index) => (
-        <>
-        <td key={index}>{item.dst}</td>
-        <td key={index}>{bigNumberToEthers(item.wad)}</td>
-        </>
+        <tr key={index}>
+        <td>{item.transactionHash}</td>
+        <td>{item.dst}</td>
+        <td>{bigNumberToEthers(item.wad)}</td>
+        </tr>
       ))}
-    </tr>
+    </>
   );
 }
 

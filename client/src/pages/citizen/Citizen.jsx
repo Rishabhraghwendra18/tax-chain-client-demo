@@ -85,7 +85,7 @@ export default function Citizen() {
   return (
     <div className="">
       <Navigation></Navigation>
-      <Header heading="Citizen: Rohan Singh"></Header>
+      <Header heading={`Citizen: ${address ? address : ""}`}></Header>
       <Container>
         <Row>
           <PurchaseTokens purhcaseTokens={convertETHToWETH}></PurchaseTokens>

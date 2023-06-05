@@ -17,6 +17,7 @@ function CitizenTable(props) {
         <thead>
           <tr>
             <th>Date</th>
+            <th>Transcation ID</th>
             <th>Amount</th>
           </tr>
         </thead>
@@ -24,6 +25,7 @@ function CitizenTable(props) {
           {props.tableData.map((item, index) => (
             <tr key={index}>
               <td key={item.date}>{convertBlockcTimeStampToStandardTime(item.blockTimestamp)}</td>
+              <td>{item.transactionHash}</td>
               <td key={item.amount}>{bigNumberToEthers(item.wad)}</td>
             </tr>
           ))}

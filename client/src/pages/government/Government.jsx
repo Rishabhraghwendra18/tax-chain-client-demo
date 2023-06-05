@@ -78,7 +78,7 @@ function Government() {
   return (
     <>
       <Navigation></Navigation>
-      <Header heading="Government of India"></Header>
+      <Header heading="Government of India" tagLine={GOVT_ADDRESS}></Header>
       <Container>
         <div className="Government mb-5">
           <Row>
@@ -100,7 +100,7 @@ function Government() {
             ></Fund>
           </Row>
           <Row>
-            <Col sm={12} md={8}>
+            <Col sm={12} md={9}>
               {/* <Transactions 
                       heading='Transactions' 
                       tableHeaders={["ConstituencyID", "Amount", "Date"]} 
@@ -111,7 +111,7 @@ function Government() {
                 tableData={transcationsList}
               ></CreateTable>
             </Col>
-            <Col sm={12} md={4}>
+            <Col sm={12} md={3}>
               <div className="Government-form">
                 <Card className="table-card mt-3">
                   <Card.Body>

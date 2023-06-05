@@ -1,5 +1,5 @@
 import React from "react";
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet,useAddress } from "@thirdweb-dev/react";
 import { Navbar, Nav, Button } from "react-bootstrap";
 import "./navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 // import { useAuth } from "../../pages/contexts/AuthContext";
 
 function Navigation() {
+  const address = useAddress();
   // const { currentUser, signout } = useAuth();
   function isGovernment() {
     return true;
@@ -29,6 +30,7 @@ function Navigation() {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav" className="navlink_container">
+        {address && (
         <Nav className="mr-auto ml-auto">
           {isCitizen() ? (
             <Link className="nav-link" to="/citizen">
@@ -62,6 +64,7 @@ function Navigation() {
             ""
           )}
         </Nav>
+        )}
         {/* <Nav.Link className="nav-link" href={`/${currentUser ? "" : "login"}`}>
           <Button
             variant="outline"
