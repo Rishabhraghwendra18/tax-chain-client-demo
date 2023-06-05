@@ -3,7 +3,6 @@ import React from "react";
 import { bigNumberToEthers } from "../../utils/bigNumberToEther";
 
 function TransactionRow(props) {
-  {console.log("data table: ",props.row)}
   return (
     <>
       {props.row.map((item,index) => (

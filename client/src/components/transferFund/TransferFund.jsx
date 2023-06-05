@@ -21,10 +21,16 @@ function TransferFunds({onSuccess}) {
     event.preventDefault();
     setIsTransferLoading(true);
     if(!toAccount && !toValue) return;
-    await constituencyTranferWETHAmount({
-      args: [toAccount, ethers.utils.parseEther(toValue)],
-    });
-    await onSuccess();
+    try {
+      await constituencyTranferWETHAmount({
+        args: [toAccount, ethers.utils.parseEther(toValue)],
+      });
+      await onSuccess();
+      
+    } catch (error) {
+      console.log("Erro while transfering funds to contractors: ",error);
+      alert(error?.data?.message);
+    }
     setIsTransferLoading(false);
   };
 

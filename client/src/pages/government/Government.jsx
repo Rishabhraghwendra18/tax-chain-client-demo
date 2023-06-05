@@ -78,6 +78,7 @@ function Government() {
       await queryGovtTransfers();
     } catch (error) {
       console.log("error occurent in govt: ",error);
+      alert(error?.data?.message);
     }
     setIsTransferLoading(false);
   };

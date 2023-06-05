@@ -76,10 +76,15 @@ export default function Citizen() {
     event.preventDefault();
     setIsTxnLoading(true);
     console.log("value: ",taxAmount)
-    if(userWETHBalance < ethers.utils.parseEther(taxAmount.toString())){
-      await convertETHToWETH(taxAmount.toString());
+    try {
+      if(userWETHBalance < ethers.utils.parseEther(taxAmount.toString())){
+        await convertETHToWETH(taxAmount.toString());
+      }
+      await transferWETHToGovtContract();
+    } catch (error) {
+      console.log("Error while transfering funds to govt: ",error);
+      alert("Error while transfering funds to govt. Please check console");
     }
-    await transferWETHToGovtContract();
     setIsTxnLoading(false);
   }
   return (
