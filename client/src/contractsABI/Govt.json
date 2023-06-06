@@ -5,7 +5,8 @@
         "internalType": "address",
         "name": "_erc20TokenAddress",
         "type": "address"
-      }
+      },
+      { "internalType": "address", "name": "_registery", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"

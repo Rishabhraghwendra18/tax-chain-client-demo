@@ -119,7 +119,7 @@ export default function Citizen() {
                   <Form className="d-flex flex-column">
                     <Form>
                       <Form.Group as={Col}>
-                        <Form.Control type="number" placeholder="Amount" value={0.1} onChange={(event)=>setTaxAmount(event.target.value)}/>
+                        <Form.Control type="number" placeholder="Amount" value={taxAmount} onChange={(event)=>setTaxAmount(event.target.value)}/>
                       </Form.Group>
                     </Form>
                     <Button

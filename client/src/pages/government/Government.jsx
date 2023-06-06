@@ -8,7 +8,7 @@ import {
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { gql,cacheExchange, createClient, dedupExchange, fetchExchange } from "urql";
-import {WETHQueryFromSource} from "../../services/WETHQuery";
+import {WETHQueryFromSource,WETHQueryFromDestination} from "../../services/WETHQuery";
 import { bigNumberToEthers } from "../../utils/bigNumberToEther";
 import Navigation from "../../components/navigation/Navbar";
 import { Row, Col, Card, Container } from "react-bootstrap";
@@ -32,6 +32,7 @@ function Government() {
   const [constituencyAddress, setConstituencyAddress] = useState('');
   const [isTransferLoading, setIsTransferLoading] = useState(false);
   const [transcationsList, setTranscationsList] = useState([]);
+  const [incomingTranscationsList, setIncomingTranscationsList] = useState([]);
   const [transferAmount, setTransferAmount] = useState(0.1);
   const {
     contract: WETHContract,
@@ -66,7 +67,13 @@ function Government() {
   },[])
   const queryGovtTransfers = async ()=>{
     const {data} = await WETHQueryFromSource(GOVT_ADDRESS);
-    setTranscationsList(data.transfers);
+    const {data: dstData} = await WETHQueryFromDestination(GOVT_ADDRESS);
+    if(data?.transfers?.length > 0){
+      setTranscationsList(data?.transfers);
+    }
+    if(dstData?.transfers?.length > 0){
+      setIncomingTranscationsList(dstData?.transfers);
+    }
   }
   const handleTransferToConstituency = async (event) => {
     event.preventDefault();
@@ -116,6 +123,10 @@ function Government() {
               <CreateTable
                 heading={"Previous Transfers"}
                 tableData={transcationsList}
+              ></CreateTable>
+              <CreateTable
+                heading={"Incoming Transfers"}
+                tableData={incomingTranscationsList}
               ></CreateTable>
             </Col>
             <Col sm={12} md={3}>
