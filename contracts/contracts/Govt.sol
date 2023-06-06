@@ -2,10 +2,8 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./IRegistery.sol";
 
-interface IRegistery {
-    function isValidConstiuency(address _contituency) external view returns (bool);
-}
 contract Govt {
     address public govtAddress;
     uint public usedFunds;
@@ -33,7 +31,7 @@ contract Govt {
     }
 
     function transferTo(address _to, uint _amount) public onlyOwner {
-        require(registery.isValidConstiuency(_to),"Not a valid constituency");
+        require(registery.isValidRegistry(_to),"Not a valid constituency");
         uint size;
         assembly {
             size := extcodesize(_to)
