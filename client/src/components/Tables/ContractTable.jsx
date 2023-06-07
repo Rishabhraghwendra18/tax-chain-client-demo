@@ -1,7 +1,10 @@
 import React from "react";
 import { Table, Card } from "react-bootstrap";
+import { convertBlockcTimeStampToStandardTime } from "../../utils/BlockTimeStampToStandardTime"; 
+import { ethers } from "ethers";
 
 function ContractTable(props) {
+  {console.log("props: ",props.tableData)}
   return (
     <Card className="constituency-card constituency-transaction-card">
       <h4 className="constituency-transaction-heading ">Previous Contracts</h4>
@@ -14,19 +17,17 @@ function ContractTable(props) {
       >
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>date</th>
-            <th>Contract ID</th>
+            <th>Date</th>
+            <th>Transcation ID</th>
+            <th>Amount</th>
           </tr>
         </thead>
         <tbody>
           {props.tableData.map((item, index) => (
             <tr key={index}>
-              <td key={0}>{item.title}</td>
-              <td key={1}>{item.description}</td>
-              <td key={3}>{item.date}</td>
-              <td key={2}>{item.work}</td>
+              <td>{convertBlockcTimeStampToStandardTime(item.blockTimestamp)}</td>
+              <td>{item.transactionHash}</td>
+              <td>{ethers.utils.formatUnits(item.wad)}</td>
             </tr>
           ))}
         </tbody>

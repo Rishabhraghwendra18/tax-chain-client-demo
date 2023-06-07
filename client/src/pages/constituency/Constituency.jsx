@@ -81,8 +81,11 @@ function Constituency() {
   const handleCreateContractor = async (event)=>{
     event.preventDefault();
     await contractorCreate({
-      args:[contractorName,description]
+      args:[contractorName,'description']
     });
+  }
+  const handleChangeConstituency = (event)=>{
+    setSelectedContituency(event.target.value);
   }
   return (
     <div>
@@ -97,6 +100,7 @@ function Constituency() {
         // width:'fit-content'
       }}
       disabled={false}
+      onChange={handleChangeConstituency}
       >
         {/* {userConstituencyIsLoading ?<option value={"Searching..."}>{"Searching..."}</option>:constituencyContract?.map((e,index)=>(
           <option value={e} key={index}>{e}</option>
@@ -134,7 +138,7 @@ function Constituency() {
                       }}
                     />
                   </Form.Group>
-                  <Form.Group as={Col}>
+                  {/* <Form.Group as={Col}>
                     <Form.Label></Form.Label>
                     <Form.Control
                       type="text"
@@ -143,7 +147,7 @@ function Constituency() {
                         setDescription(v.target.value);
                       }}
                     />
-                  </Form.Group>
+                  </Form.Group> */}
                 <button
                   type="submit"
                   className="constituency-find-btn"

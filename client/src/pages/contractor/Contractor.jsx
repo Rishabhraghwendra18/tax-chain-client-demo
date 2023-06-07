@@ -9,6 +9,7 @@ import {
   useContractWrite,
 } from "@thirdweb-dev/react";
 import { bigNumberToEthers } from "../../utils/bigNumberToEther";
+import { WETHQueryFromDestination } from "../../services/WETHQuery";
 import Select from "../../components/Select/index";
 import "./contractor.css";
 import {
@@ -36,6 +37,7 @@ function Contractor() {
   const [contractors, setContractors] = useState([]);
   const [selectedContractor, setSelectedContractor] = useState('');
   const [contractorBalance, setContractorBalance] = useState('');
+  const [incomingTranscationsList, setIncomingTranscationsList] = useState([]);
 
   useEffect(()=>{
     getAllRegisteries()
@@ -44,6 +46,7 @@ function Contractor() {
 useEffect(()=>{
   if(!selectedContractor)return;
   getContractorBalance();
+  queryContractorIncomingFunds();
 },[selectedContractor])
 const getAllRegisteries = async ()=>{
   const Contract = await sdk.getContract(CONTRACTOR_REGISTERY,CONTRACTORABI);
@@ -64,7 +67,13 @@ const getContractorBalance = async ()=>{
     setContractorBalance(bigNumberToEthers(data));
 }
 const handleChangeContractor = (event)=>{
-  console.log("d",event.target.value);
+  setSelectedContractor(event.target.value);
+}
+const queryContractorIncomingFunds = async ()=>{
+  const {data: dstData} = await WETHQueryFromDestination(selectedContractor);
+  if(dstData?.transfers?.length > 0){
+    setIncomingTranscationsList(dstData?.transfers);
+  }
 }
   return (
     <div>
@@ -98,7 +107,7 @@ const handleChangeContractor = (event)=>{
           <Col md={12}>
             <Card className="table-card">
               <Card.Body>
-                <ContractTable tableData={[]}></ContractTable>
+                <ContractTable tableData={incomingTranscationsList}></ContractTable>
               </Card.Body>
             </Card>
           </Col>
