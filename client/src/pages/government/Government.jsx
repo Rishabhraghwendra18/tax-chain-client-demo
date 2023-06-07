@@ -85,7 +85,7 @@ function Government() {
       await queryGovtTransfers();
     } catch (error) {
       console.log("error occurent in govt: ",error);
-      alert(error?.data?.message);
+      alert("Error while transfering funds to constituency. Check console");
     }
     setIsTransferLoading(false);
   };

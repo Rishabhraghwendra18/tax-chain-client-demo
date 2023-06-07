@@ -23,6 +23,9 @@ contract Registery{
         _;
     }
     
+    function setRegistery(address _registery) public onlyOwner{
+        registery = IRegistery(_registery);
+    }
     function setNewOwner(address _user) onlyOwner public {
         owner = _user;
     }

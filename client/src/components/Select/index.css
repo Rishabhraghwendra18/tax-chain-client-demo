@@ -1,0 +1,25 @@
+.custom-select select::-ms-expand {
+    color: white;
+  }
+  
+  .custom-select select {
+    color: white;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  /* .custom-select::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    margin-top: -2px;
+    border-style: solid;
+    border-width: 6px 6px 0 6px;
+    border-color: white transparent transparent transparent;
+    pointer-events: none;
+  } */
+  
