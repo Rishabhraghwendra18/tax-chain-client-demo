@@ -42,6 +42,9 @@ contract Registery{
     function getRegistery(address _user) public view returns (address) {
         return userRegistery[_user];
     }
+    function getRegisteryAddress() public view  returns (address) {
+        return address(registery);
+    }
     function isValidRegistry(address _registery) public view returns (bool) {
         return isValidRegistries[_registery];
     }

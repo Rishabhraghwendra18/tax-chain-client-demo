@@ -29,7 +29,7 @@ async function main() {
   );
   const constituencyRegistery = await ConstituencyRegistery.deploy(
     WETH,
-    contractRegistery.address
+    contractorRegistery.address
   );
 
   await constituencyRegistery.deployed();
