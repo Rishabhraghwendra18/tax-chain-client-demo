@@ -6,8 +6,9 @@
 // global scope, and execute the script.
 const hre = require("hardhat");
 
+const WETH = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
+
 async function main() {
-  const WETH = "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9";
 
   const ContractorRegistery = await hre.ethers.getContractFactory(
     "ContractorRegistery"
@@ -39,10 +40,44 @@ async function main() {
 
   await govt.deployed();
 
-  console.log("contractorRegistery: ", contractorRegistery.address);
-  console.log("contractRegistery: ", contractRegistery.address);
-  console.log("constituencyRegistery address: ", constituencyRegistery.address);
-  console.log("Govt address: ", govt.address);
+  console.log("contractorRegistery(CONTRACTOR_ADDRESS): ", contractorRegistery.address);
+  console.log("contractRegistery(CONTRACT_ADDRESS): ", contractRegistery.address);
+  console.log("constituencyRegistery address(REGISTERY_ADDRESS): ", constituencyRegistery.address);
+  console.log("Govt address(GOVT_ADDRESS): ", govt.address);
+  await verifyContracts(contractorRegistery,contractRegistery,constituencyRegistery,govt);
+}
+
+async function verifyContracts(contractorRegistery,contractRegistery,constituencyRegistery,govt) {
+  await hre.run("verify:verify",{
+    address:contractorRegistery.address,
+    constructorArguments:[
+      WETH,
+    ]
+  });
+
+  await hre.run("verify:verify",{
+    address:contractRegistery.address,
+    constructorArguments:[
+      WETH,
+      contractorRegistery.address
+    ]
+  });
+
+  await hre.run("verify:verify",{
+    address:constituencyRegistery.address,
+    constructorArguments:[
+      WETH,
+      contractorRegistery.address
+    ]
+  });
+
+  await hre.run("verify:verify",{
+    address:govt.address,
+    constructorArguments:[
+      WETH,
+      constituencyRegistery.address
+    ]
+  });
 }
 
 // We recommend this pattern to be able to use async/await everywhere
