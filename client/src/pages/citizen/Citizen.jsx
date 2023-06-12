@@ -14,6 +14,7 @@ import {
   Alert,
   Table,
 } from "react-bootstrap";
+import { bigNumberToEthers } from "../../utils/bigNumberToEther";
 import Footer from "../../components/footer/Footer";
 import CitizenTable from "../../components/Tables/CitizenTable.jsx";
 import GovernmentTable from "../../components/Tables/GovernmentTable.jsx";
@@ -94,7 +95,7 @@ export default function Citizen() {
       <Container>
         <Row>
           <PurchaseTokens purhcaseTokens={convertETHToWETH}></PurchaseTokens>
-          <CurrentTokens name="Current Balance" value="2392138"></CurrentTokens>
+          <CurrentTokens name="Current WETH Balance" value={userWETHBalance?bigNumberToEthers(userWETHBalance):''}></CurrentTokens>
         </Row>
       </Container>
       <div className="PayTax my-5">

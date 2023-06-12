@@ -8,7 +8,7 @@ export default function CurrentTokens({ name, value }) {
       <Card className="ct-card">
         <Card.Body>
           <h4 className="ct-heading">{name}</h4>
-          <h5 className="ct-text">{value} INR</h5>
+          <h5 className="ct-text">{value} WETH</h5>
         </Card.Body>
       </Card>
     </Col>
